@@ -1,0 +1,157 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "TypeScript-NodeJS",
+        "description": "Calling external API in NodeJs using TypeScript"
+    },
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users and weather report"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            }
+        },
+        "/weather/{location}": {
+            "parameters": [
+                {
+                    "name": "location",
+                    "in": "path",
+                    "required": true,
+                    "description": "location for which the wether report is to be generated",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Weather"
+                ],
+                "summary": "Get weather by location",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "location",
+                        "required": true,
+                        "description": "weather by location",
+                        "schema": {
+                            "$ref": "#/definitions/location"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/location"
+                        }
+                    },
+                    "404": {
+                        "description": "Request Not found."
+                    }
+                }
+            }
+        },
+        "/user/weather/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the user that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "UsersCityWeather"
+                ],
+                "summary": "Get user's city weather by user Id ",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Get user's city weather by user Id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "Request Not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "location": {
+            "properties": {
+                "locationn": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object"
+        },
+        "Users": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/User"
+                    }
+                }
+            }
+        },
+        "Weather": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/weather"
+                    }
+                }
+            }
+        }
+    }
+}
